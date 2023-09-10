@@ -1,0 +1,96 @@
+<math alttext="S(E)=\ln\Gamma(E)." class="ltx_Math" display="block" id="S2.E2.m1.1">
+ <semantics>
+  <mrow>
+   <mrow>
+    <mrow>
+     <mi>
+      S
+     </mi>
+     <mo>
+      ⁢
+     </mo>
+     <mrow>
+      <mo stretchy="false">
+       (
+      </mo>
+      <mi>
+       E
+      </mi>
+      <mo stretchy="false">
+       )
+      </mo>
+     </mrow>
+    </mrow>
+    <mo>
+     =
+    </mo>
+    <mrow>
+     <mrow>
+      <mi>
+       ln
+      </mi>
+      <mo>
+       ⁡
+      </mo>
+      <mi mathvariant="normal">
+       Γ
+      </mi>
+     </mrow>
+     <mo>
+      ⁢
+     </mo>
+     <mrow>
+      <mo stretchy="false">
+       (
+      </mo>
+      <mi>
+       E
+      </mi>
+      <mo stretchy="false">
+       )
+      </mo>
+     </mrow>
+    </mrow>
+   </mrow>
+   <mo>
+    .
+   </mo>
+  </mrow>
+  <annotation-xml>
+   <apply>
+    <eq>
+    </eq>
+    <apply>
+     <times>
+     </times>
+     <ci>
+      𝑆
+     </ci>
+     <ci>
+      𝐸
+     </ci>
+    </apply>
+    <apply>
+     <times>
+     </times>
+     <apply>
+      <ln>
+      </ln>
+      <ci>
+       Γ
+      </ci>
+     </apply>
+     <ci>
+      𝐸
+     </ci>
+    </apply>
+   </apply>
+  </annotation-xml>
+  <annotation>
+   italic-S OPEN:( italic-E CLOSE:) RELOP:equals OPFUNCTION:natural-logarithm Gamma OPEN:( italic-E CLOSE:) PERIOD:.
+  </annotation>
+  <annotation>
+   S(E)=\ln\Gamma(E).
+  </annotation>
+ </semantics>
+</math>,S(E)=\ln\Gamma(E).
