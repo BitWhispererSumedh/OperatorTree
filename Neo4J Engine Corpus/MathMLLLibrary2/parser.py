@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 # unnecessary attributes to remove from mathml string
 REMOVE_ATTRIBUTES = ["id", "xref", "type", "cd", "encoding"]
 
+######################################################################################################################################
+
 """
 toMathMLStrings:
     Purpose:
