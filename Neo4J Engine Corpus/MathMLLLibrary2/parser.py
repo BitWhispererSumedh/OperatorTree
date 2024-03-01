@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import pandas as pd
 
 # unnecessary attributes to remove from mathml string
 REMOVE_ATTRIBUTES = ["id", "xref", "type", "cd", "encoding"]
@@ -29,3 +30,21 @@ def toMathMLStrings(html_filename):
             # prettify fixes mismatched tags and formats the HTML better
             mathml_strings.append([mms.prettify(), mms["alttext"]])
     return mathml_strings
+
+"""
+input: tsv filepath from OPT folder
+output: pandas df of mathmls
+"""
+def parseArqForMathml(tsv):
+    df = pd.read_csv(tsv, sep='\t')
+    print(str(len(df)) + " formulas found")
+    return df['formula']
+
+"""
+input: tsv filepath from LATEX folder
+output: pandas df of latexes
+"""
+def parseArqForLatex(tsv):
+    df = pd.read_csv(tsv, sep='\t')
+    print(str(len(df)) + " formulas found")
+    return df['formula']

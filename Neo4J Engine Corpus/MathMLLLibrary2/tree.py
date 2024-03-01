@@ -8,9 +8,7 @@ struct Node:
 class Node:
     def __init__(self, value, children=None):
         self.value = value
-        self.children = [] if children == None else children
-
-######################################################################################################################################        
+        self.children = [] if children == None else children       
 
 # tags to skip
 skip = {'math', 'semantics', 'annotation', 'annotation-xml'}
@@ -22,6 +20,31 @@ term = {'ci', 'cn', 'cs', 'csymbol'}
 op = {'apply','ci', 'cn', 'cs', 'csymbol'}
 
 ######################################################################################################################################
+
+def subMissingGlyph(c):
+    uni = ord(c)
+    if uni >= 119860 and uni <= 119885:     # mathematical italic capital
+        new_uni = uni - (119860 - ord('A'))
+        return chr(new_uni)
+    elif uni >= 119886 and uni <= 119911:   # mathematical italic small
+        new_uni = uni - (119886 - ord('a'))
+        return chr(new_uni)
+    elif uni >= 120572 and uni <= 120596:   # Greek characters
+        new_uni = uni - (120572 - 0x03B1)
+        return chr(new_uni)
+    elif uni >= 119834 and uni <= 119859:   # mathematical bold small
+        new_uni = uni - (119834 - ord('a'))
+        return chr(new_uni)
+    elif uni >= 119964 and uni <= 119989:   # mathematical script capital
+        new_uni = uni - (119964 - ord('A'))  
+        return chr(new_uni)
+    elif uni >= 119808 and uni <= 119833:   # mathematical bold capital
+        new_uni = uni - (119808 - ord('A'))
+        return chr(new_uni)
+    else:
+        return chr(uni)
+
+###################################################################################################################################### 
 
 """
 toOpTree:
@@ -218,3 +241,61 @@ def toOpTree(mathml_string, compress_subscripts = True, compress_superscripts = 
     except ET.XMLSyntaxError as e:
         print(f"Error parsing MathML string: {mathml_string}")
         return None
+    
+# input: et node, parent node (custom)  
+# output: root node (custom) of op tree  
+def eTreeToOpTree(et, parent):
+    text = et.text
+    tag = et.tag
+    if '{' in tag and '}' in tag:
+        cutoff = tag.find('}')
+        tag = tag[cutoff+1:]
+
+    if tag == "math": # skip math node
+        for child in et:
+            return eTreeToOpTree(child, parent)
+
+    if text is not None:
+        if len(text) == 1: # if text is single character sub missing glyph
+            text = subMissingGlyph(text)
+        node = Node(text, [])
+
+    else:
+        node = Node(tag, [])
+
+    if parent is not None:
+        parent.children.append(node)
+
+    for child in et:
+        eTreeToOpTree(child, node)
+
+    return node
+
+# input: root node (custom) of op tree
+# output: none (but binarizes inputted op tree)
+def binarizeOpTree(node):
+    if len(node.children) > 2:
+        new_node = Node(node.value, node.children[1:])
+        node.children = [node.children[0], new_node]
+
+    for child in node.children:
+        binarizeOpTree(child)
+
+def reduceOpTree(node):
+    if node.value == "apply":
+        node.value = node.children[0].value
+
+        if len(node.children[0].children) > 0:
+            temp_children = node.children[1:]
+            node.children = node.children[0].children
+            node.children.extend(temp_children)
+        else:
+            node.children = node.children[1:]
+
+    if node.value == "subscript":
+        if len(node.children[0].children) == 0 and len(node.children[1].children) == 0:
+            node.value = node.children[0].value + "_" + node.children[1].value
+            node.children = []
+        
+    for child in node.children:
+        reduceOpTree(child)
