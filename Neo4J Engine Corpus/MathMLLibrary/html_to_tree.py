@@ -39,7 +39,7 @@ REPLACE_COMMANDS = {
 }
 
 
-# veiw text contents of eree objects
+# veiw text contents of etree objects
 def pretty_print(et, indent=4):
     et_copy = deepcopy(et)
     input_xml_str = ET.tostring(et_copy).decode('utf-8').strip()
@@ -322,15 +322,6 @@ def toOpTree(mathml_string, compress_subscripts = True, compress_superscripts = 
                     else:
                         return Node(value, new_l1)
                 
-                
-
-
-                        
-                    
-                    
-                        
-             
-
                         # if l1.value == 'superscript':
                         #     l0.children.remove(l1_idx+1)
 
@@ -338,40 +329,10 @@ def toOpTree(mathml_string, compress_subscripts = True, compress_superscripts = 
                         # if l1.value == 'd' and l1.children == []:
                         #     new_children = l0
 
-
-
                         # if l1.value == 'superscript':
                         #     for l2_idx,l2 in enumerate(l1.children):
                         #         if l2.ch
 
-
-
-
-                
-
-      
-                    
-                      
-
-
-
-
-
-
-
-                           
-
-
-
-
-
-
-                        
-
-
-
-
- 
             # operator's children become children of operator node
             children.extend(node.children) 
             # remaining children are operands & become children of operator node
